@@ -73,26 +73,22 @@ class UpdateProducto extends Component {
                     <div id="content">
                         <h1 className="subheader">Actualizar producto</h1>
 
-                        {this.state.producto.descripcion &&
+                        <form className="mid-form" onSubmit={this.update} onChange={this.getFormData}>
+                            <div className="form-group">
+                                <label htmlFor="descripcion">Descripcion</label>
+                                <input type="text" name="descripcion" defaultValue={producto.descripcion} ref={this.descripcionRef} />
+                            </div>
 
-                            <form className="mid-form" onSubmit={this.update} onChange={this.getFormData}>
-                                <div className="form-group">
-                                    <label htmlFor="descripcion">Descripcion</label>
-                                    <input type="text" name="descripcion" defaultValue={producto.descripcion} ref={this.descripcionRef} />
-                                </div>
+                            <div className="form-group">
+                                <label htmlFor="precio">Precio</label>
+                                <input type="text" name="precio" defaultValue={producto.precio} ref={this.precioRef} />
+                            </div>
 
-                                <div className="form-group">
-                                    <label htmlFor="precio">Precio</label>
-                                    <input type="text" name="precio" defaultValue={producto.precio} ref={this.precioRef} />
-                                </div>
+                            <div className="clearfix"></div>
 
-                                <div className="clearfix"></div>
+                            <input type="submit" value="Actualizar" className="btn btn-success" />
 
-                                <input type="submit" value="Actualizar" className="btn btn-success" />
-
-                            </form>
-
-                        }
+                        </form>
                     </div>
 
                 </div>

@@ -35,10 +35,6 @@ class Productos extends Component {
             })
     }
 
-    create = () => {
-        window.location.href="./create"
-    }
-
     delete = (id) => {
         if(!window.confirm('¿Desea eliminar el producto?')) return;
 
@@ -64,7 +60,7 @@ class Productos extends Component {
 
                         <h2>{producto.descripcion}</h2>
                         <span className="date">
-                            {producto.precio}
+                            ${producto.precio}
                         </span>
                         {this.user.tipo === 'Supervisor' &&
                             <React.Fragment>
@@ -86,7 +82,10 @@ class Productos extends Component {
                 <div id="articles">
                     <h1>Productos</h1>
 
-                    <button onClick={this.create} className="btn btn-success">Agregar</button>
+                    {this.user.tipo === 'Supervisor' &&
+                        <Link to={'/home/create'} className="btn btn-success center">Agregar</Link>
+                    }
+
                     {listArticles}
                 </div>
             );
@@ -95,8 +94,12 @@ class Productos extends Component {
         else if(!this.state.productos.length && this.state.status === 'success') {
             return (
                 <div id="articles">
-                    <h2 className="subheader">No hay articulos para mostrar</h2>
+                    <h2 className="subheader">No hay productos para mostrar</h2>
                     <p>Todavia no hay contenido en esta seccion</p>
+
+                    {this.user.tipo === 'Supervisor' &&
+                        <Link to={'/home/create'} className="btn btn-success center">Agregar</Link>
+                    }
                 </div>
             );
 
