@@ -13,12 +13,17 @@ class Login extends Component {
     userRef = React.createRef();
     passwordRef = React.createRef();
 
+
     state = {
         user: {},
         status: null
     }
 
-    getFormData = (e) => {
+    componentDidMount() {
+
+    }
+
+    getFormData = () => {
 
         var user = {
             usuario: this.userRef.current.value,

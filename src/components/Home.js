@@ -13,8 +13,7 @@ class Home extends Component {
             <Header />
                 <div className="center">
                     <div id="content">
-
-                    <Productos />
+                        <Productos />
                     </div>
 
                 </div>

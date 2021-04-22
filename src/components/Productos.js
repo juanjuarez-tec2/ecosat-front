@@ -27,11 +27,28 @@ class Productos extends Component {
     getArticles = () => {
         axios.get(this.url + "productos/getAll")
             .then(res => {
-                console.log(res.data)
+                console.log(res.data);
                 this.setState({
                     productos: res.data.productos,
                     status: 'success'
                 });
+            })
+    }
+
+    create = () => {
+        window.location.href="./create"
+    }
+
+    delete = (id) => {
+        if(!window.confirm('¿Desea eliminar el producto?')) return;
+
+        axios.delete(this.url + 'productos/delete/' + id)
+            .then(res => {
+                this.getArticles();
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
             })
     }
 
@@ -47,10 +64,17 @@ class Productos extends Component {
 
                         <h2>{producto.descripcion}</h2>
                         <span className="date">
-                            $1000
+                            {producto.precio}
                         </span>
                         {this.user.tipo === 'Supervisor' &&
-                            <Link to={'/home/update/' + producto._id}>Modificar producto</Link>
+                            <React.Fragment>
+                                <Link to={'/home/update/' + producto._id}>Modificar Producto</Link>
+                                <button onClick={
+                                    () => {
+                                        this.delete(producto._id)
+                                    }
+                                } className="btn btn-danger">Eliminar</button>
+                            </React.Fragment>
                         }
 
                         <div className="clearfix"></div>
@@ -61,6 +85,8 @@ class Productos extends Component {
             return (
                 <div id="articles">
                     <h1>Productos</h1>
+
+                    <button onClick={this.create} className="btn btn-success">Agregar</button>
                     {listArticles}
                 </div>
             );

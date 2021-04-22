@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 class Header extends Component {
+
+    logout = () =>{
+        cookies.remove('usuario', {path: '/'});
+        cookies.remove('nombre', {path: '/'});
+        cookies.remove('tipo', {path: '/'});
+        window.location.href="./login"
+    }
 
     render() {
         var isLogin = this.props.login;
@@ -25,7 +35,7 @@ class Header extends Component {
                                     <NavLink to="/home" activeClassName="active">Inicio</NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/productos" activeClassName="active">Productos</NavLink>
+                                    <span onClick={this.logout} style={{cursor: 'pointer', }}>Cerrar Sesion</span>
                                 </li>
                             </ul>
                         </nav>

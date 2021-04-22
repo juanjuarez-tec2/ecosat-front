@@ -29,13 +29,42 @@ class UpdateProducto extends Component {
                 producto: res.data.producto,
                 status: 'success'
             });
-
-            this.descripcionRef = this.state.producto.descripcion
-            this.precioRef = this.state.producto.precio
         })
     }
 
+    getFormData= () => {
+
+        var producto = {
+            descripcion: this.descripcionRef.current.value,
+            precio: this.precioRef.current.value,
+            _id: this.state.producto._id,
+            date: this.state.producto.date
+        }
+
+        this.setState({
+            producto: producto
+        });
+
+    }
+
+    update = (e) => {
+        e.preventDefault();
+
+        axios.put(this.url + 'productos/update/' + this.state.producto._id, this.state.producto)
+            .then(res => {
+                if (res.data.status === 'success') {
+                    alert('Producto actualizado');
+                    window.location.href="./../"
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     render() {
+
+        var producto = this.state.producto;
 
         return (
             <div id="formulario">
@@ -44,24 +73,26 @@ class UpdateProducto extends Component {
                     <div id="content">
                         <h1 className="subheader">Actualizar producto</h1>
 
+                        {this.state.producto.descripcion &&
 
-                        {/* Crear un formulario */}
-                        <form className="mid-form" onSubmit={this.login} onChange={this.getFormData}>
-                            <div className="form-group">
-                                <label htmlFor="descripcion">Descripcion</label>
-                                <input type="text" name="descripcion" ref={this.descripcionRef} />
-                            </div>
+                            <form className="mid-form" onSubmit={this.update} onChange={this.getFormData}>
+                                <div className="form-group">
+                                    <label htmlFor="descripcion">Descripcion</label>
+                                    <input type="text" name="descripcion" defaultValue={producto.descripcion} ref={this.descripcionRef} />
+                                </div>
 
-                            <div className="form-group">
-                                <label htmlFor="precio">Precio</label>
-                                <input type="text" name="precio" ref={this.precioRef} />
-                            </div>
+                                <div className="form-group">
+                                    <label htmlFor="precio">Precio</label>
+                                    <input type="text" name="precio" defaultValue={producto.precio} ref={this.precioRef} />
+                                </div>
 
-                            <div className="clearfix"></div>
+                                <div className="clearfix"></div>
 
-                            <input type="submit" value="Enviar" className="btn btn-success" />
+                                <input type="submit" value="Actualizar" className="btn btn-success" />
 
-                        </form>
+                            </form>
+
+                        }
                     </div>
 
                 </div>
